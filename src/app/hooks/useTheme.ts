@@ -1,20 +1,27 @@
 // -> ReactJS
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-// -> Config
+// -> Configs
 import { localStorageKeys } from '../config/localStorageKeys';
 
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
-    const storegedTheme = localStorage.getItem(localStorageKeys.APP_THEME);
-    return storegedTheme ?? 'dark';
+    const storagedTheme = localStorage.getItem(localStorageKeys.APP_THEME);
+    return storagedTheme ?? 'dark';
   });
 
+  useEffect(() => {
+    if(theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
   const toggleTheme = useCallback(() => {
-    const storegedTheme = localStorage.getItem(localStorageKeys.APP_THEME);
-    const currentTheme = storegedTheme === 'dark' ? 'light' : 'dark';
-    setTheme(currentTheme);
-    localStorage.setItem(localStorageKeys.APP_THEME, currentTheme);
+    const prevTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(prevTheme);
+    localStorage.setItem(localStorageKeys.APP_THEME, prevTheme);
   }, [theme]);
 
   return {

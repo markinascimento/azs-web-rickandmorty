@@ -1,16 +1,18 @@
-// -> Custom hooks
-import { useTheme } from './app/hooks/useTheme';
+// -> Query lib
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+// -> Routes
+import { Router } from './router';
 
 export function App() {
-  const { theme, toggleTheme } = useTheme();
-
-  console.log({ theme });
+  const client = new ApolloClient({
+    uri: 'https://rickandmortyapi.com/graphql',
+    cache: new InMemoryCache(),
+  });
 
   return (
-    <div className='bg-red-500'>
-      <button onClick={toggleTheme}>
-        test
-      </button>
-    </div>
+    <ApolloProvider client={client}>
+      <Router />
+    </ApolloProvider>
   );
 }
