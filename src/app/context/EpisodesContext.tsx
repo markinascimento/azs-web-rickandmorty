@@ -1,11 +1,12 @@
 import { ReactNode, createContext, useCallback, useState } from 'react';
 import { localStorageKeys } from '../config/localStorageKeys';
-import { EpisodeDTO, SeriesContextProps } from './interface';
+import { EpisodesContextProps } from './interface';
 import toast from 'react-hot-toast';
+import { EpisodeDTO } from '../DTOS/EpisodeDTO';
 
-export const SeriesContext = createContext({} as SeriesContextProps);
+export const EpisodesContext = createContext({} as EpisodesContextProps);
 
-export function SeriesProvider({ children }: { children: ReactNode }) {
+export function EpisodesProvider({ children }: { children: ReactNode }) {
   const [favorites, setFavorites] = useState<EpisodeDTO[]>(() => {
     const storagedEpisodesFavorite = JSON.parse(localStorage.getItem(localStorageKeys.EPISODES_FAVORITE)!);
     return storagedEpisodesFavorite ?? [];
@@ -55,7 +56,7 @@ export function SeriesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <SeriesContext.Provider
+    <EpisodesContext.Provider
       value={{
         favorites,
         watched,
@@ -64,6 +65,6 @@ export function SeriesProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
-    </SeriesContext.Provider>
+    </EpisodesContext.Provider>
   );
 }

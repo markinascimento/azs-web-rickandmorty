@@ -4,26 +4,14 @@ import { useQuery } from '@apollo/client';
 // -> Routing lib
 import { useParams } from 'react-router-dom';
 
+// -> Custom hooks
+import { useEpisodes } from '../../../app/hooks/useEpisodes';
+
 // -> query
 import { GET_EPISODE_BY_ID } from '../../../app/queries/GET_EPISODE_BY_ID';
-import useSeries from '../../../app/hooks/useSeries';
 
 // -> Types
-export interface EpisodeDTO {
-  id: number;
-  air_date: string;
-  characters: Array<{
-    id: string;
-    image: string;
-    name: string;
-    species: string;
-    status: string;
-  }>;
-  created: Date;
-  episode: string;
-  name: string;
-  url: string;
-}
+import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
 
 export function useEpisodeDetailsController() {
   const { id } = useParams();
@@ -33,7 +21,7 @@ export function useEpisodeDetailsController() {
     favorites,
     toggleEpisodeWatched,
     toggleEpisodeFavorite,
-  } = useSeries();
+  } = useEpisodes();
 
   const { data, loading } = useQuery(GET_EPISODE_BY_ID, {
     variables: { episodeId: id! }

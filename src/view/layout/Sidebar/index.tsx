@@ -1,19 +1,36 @@
 // -> ReactJS
 import { useCallback, useState } from 'react';
 
+// -> Routing lib
+import { Outlet, useNavigate } from 'react-router-dom';
+
+// -> Icons lib
+import { AlignJustify, X } from 'lucide-react';
+
 // -> Utils
 import { cn } from '../../../app/utils/cn';
-import { SidebarItem } from './components/SidebarItem';
-import { Outlet } from 'react-router-dom';
-import { AlignJustify, Home, MonitorPlay, Star, X } from 'lucide-react';
 
+// -> Components
+import { SidebarItem } from './components/SidebarItem';
+
+// -> Images
 import logoImg from '../../assets/logo.svg';
 
+// -> Data
+import { dataRouter } from './dataRouter';
+
 export function Sidebar() {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
 
   const toggleChangeOpen = useCallback(() => {
     setOpen(prevState => !prevState);
+  }, []);
+
+  const handleNavigate = useCallback((path: string) => {
+    navigate(path, { replace: true });
+    setOpen(false);
   }, []);
 
   return (
@@ -51,11 +68,15 @@ export function Sidebar() {
         </header>
 
         <div className='flex flex-col flex-1 w-full h-full mt-8 px-4 space-y-6'>
-          <SidebarItem label='Episodios' path='/'  Icon={Home}/>
-
-          <SidebarItem label='Favoritos' path='/favorite' Icon={Star}/>
-
-          <SidebarItem label='Continuar assistindo' path='/continue_watching' Icon={MonitorPlay}/>
+          {dataRouter.map(route => (
+            <SidebarItem
+              key={route.id}
+              label={route.label}
+              path={route.path}
+              Icon={route.Icon}
+              onNavigate={() => handleNavigate(route.path)}
+            />
+          ))}
         </div>
       </div>
 

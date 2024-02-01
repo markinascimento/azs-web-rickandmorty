@@ -2,7 +2,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 // -> ContextAPI
-import { SeriesProvider } from './app/context/SeriesContext';
+import { EpisodesProvider } from './app/context/EpisodesContext';
 
 // -> Routes
 import { Router } from './router';
@@ -16,11 +16,11 @@ export function App() {
 
   return (
     <ApolloProvider client={client}>
-      <SeriesProvider>
+      <EpisodesProvider>
         <Toaster />
 
         <Router />
-      </SeriesProvider>
+      </EpisodesProvider>
     </ApolloProvider>
   );
 }

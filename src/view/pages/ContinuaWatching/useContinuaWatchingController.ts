@@ -1,19 +1,16 @@
 // -> ReactJS
 import { ChangeEvent, useMemo, useState } from 'react';
 
-// -> Query lib
-import { useQuery } from '@apollo/client';
-
-// -> Query
-import { GET_ALL_EPISODES } from '../../../app/queries/GET_ALL_EPISODES';
+// -> Custom hooks
+import { useEpisodes } from '../../../app/hooks/useEpisodes';
 
 // -> Types
 import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
 
-export function useHomeController() {
-  const { loading, data } = useQuery(GET_ALL_EPISODES);
+export function useContinuaWatchingController() {
+  const { watched } = useEpisodes();
 
-  const [filter, setFilter] = useState<string>('');
+  const [filter, setFilter] = useState('');
 
   function handleChangeFilter(event: ChangeEvent<HTMLInputElement>) {
     setFilter(event.target.value);
@@ -24,16 +21,23 @@ export function useHomeController() {
   }
 
   const filteredEpisodes = useMemo(() => (
-    data?.episodes.results.filter((episode: EpisodeDTO) => (
+    watched.filter((episode: EpisodeDTO) => (
       episode.name.toLocaleLowerCase().includes(filter.toLowerCase()
       )))
-  ), [data, filter]);
+  ), [watched, filter]);
+
+  const orderArrayById = filteredEpisodes.sort((a, b) => {
+    if(Number(a.id) < Number(b.id)) {
+      return -1;
+    }  else {
+      return 1;
+    }
+  });
 
   return {
     // Variables
     filter,
-    loading,
-    episodes: filteredEpisodes ?? [],
+    episodes: orderArrayById ?? [],
 
     // Functions
     handleChangeFilter,

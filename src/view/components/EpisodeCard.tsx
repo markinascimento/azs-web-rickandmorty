@@ -1,11 +1,14 @@
 // -> Routing lib
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // -> Icons lib
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Star } from 'lucide-react';
 
-// -> Components
-import { Star } from './Star';
+// -> Custom Hooks
+import { useEpisodes } from '../../app/hooks/useEpisodes';
+
+// -> Utils
+import { cn } from '../../app/utils/cn';
 
 // -> Image
 import logoImg from '../assets/img.png';
@@ -14,13 +17,32 @@ import logoImg from '../assets/img.png';
 import { EpisodeDTO } from '../../app/DTOS/EpisodeDTO';
 
 export function EpisodeCard({ episode }: {episode: EpisodeDTO}) {
+  const { pathname } = useLocation();
+
+  const {
+    watched,
+    favorites,
+    toggleEpisodeWatched,
+    toggleEpisodeFavorite
+  } = useEpisodes();
+
+  const isFavorite = favorites.some(item => item.id === episode?.id);
+
+  const hasWatched = watched.some(item => item.id === episode?.id);
+
+  console.log(episode);
+
   return (
-    <Link
-      to={`/episode/${episode.id}`}
-      className="flex flex-col w-full items-center gap-4 min-h-[368px] rounded-2xl bg-[#121E29] p-4
-      md:min-h-[268px] relative border-b-4 border-green-500"
+    <div
+      className={cn(
+        `flex flex-col w-full items-center gap-4 min-h-[368px] rounded-2xl bg-[#121E29] p-4 md:min-h-[268px]
+        relative border-b-4 border-transparent`,
+        hasWatched && 'border-green-500'
+      )}
     >
-      <img src={logoImg} alt="" />
+      <Link to={`/episode/${episode.id}`}>
+        <img src={logoImg} alt="" />
+      </Link>
 
       <div className='w-full h-full mt-6 md:mt-2'>
         <div className='flex w-full items-start gap-2'>
@@ -40,15 +62,30 @@ export function EpisodeCard({ episode }: {episode: EpisodeDTO}) {
         </span>
       </div>
 
-      <div className='flex items-center justify-center absolute w-10 h-10 top-2 left-2'>
-        <CheckCircle2 className='text-green-500' />
-      </div>
+      {pathname !== '/favorite' && (
+        <button
+          onClick={() => toggleEpisodeWatched(episode)}
+          className='absolute top-2 left-2 flex w-12 h-12 items-center justify-center rounded-full'
+        >
+          <CheckCircle2
+            fill={hasWatched ? '#FFF' : 'transparent'}
+            strokeWidth={2}
+            className={cn( hasWatched ? 'text-green-500' : 'text-green-900' )}
+          />
+        </button>
+      )}
 
-      <div className='flex items-center justify-center absolute w-10 h-10 top-2 right-2'>
-        <Star />
-      </div>
-
-      <div className='absolute w-full h-full top-0 z-50 inset-0 rounded-2xl'></div>
-    </Link>
+      {pathname !== '/continue_watching' && (
+        <button
+          onClick={() => toggleEpisodeFavorite(episode)}
+          className='absolute top-2 right-2 flex w-12 h-12 items-center justify-center rounded-full'
+        >
+          <Star
+            fill={isFavorite ? '#F7C700' : 'transparent'}
+            strokeWidth={isFavorite ? 0 : 2}
+          />
+        </button>
+      )}
+    </div>
   );
 }

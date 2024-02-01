@@ -1,18 +1,26 @@
-import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
+// -> Controller
+import { useFavoriteController } from './useFavoriteController';
+
+// -> Components
 import { BodyList } from '../../components/BodyList';
 import { Container } from '../../components/Container';
-import { EmptyState } from '../../components/EmptyState';
-import { EpisodeCard } from '../../components/EpisodeCard';
 import { InputFilter } from '../../components/InputFilter';
-import { useContinuaWatchingController } from './useContinuaWatchingController';
+import { EpisodeCard } from '../../components/EpisodeCard';
 
-export function ContinuaWatching() {
+// -> Types
+import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
+import { EmptyState } from '../../components/EmptyState';
+
+export function Favorite() {
   const {
-    episodes,
+    // Variables
     filter,
+    episodes,
+
+    // Functions
     handleChangeFilter,
-    handleClearInputFilter,
-  } = useContinuaWatchingController();
+    handleClearInputFilter
+  } = useFavoriteController();
 
   return (
     <Container>
@@ -27,7 +35,7 @@ export function ContinuaWatching() {
       <BodyList className='mt-6'>
         {episodes.length <= 0 && (
           <div className='flex items-center justify-center w-full h-full'>
-            <EmptyState title='Não encontramos nenhum episodio na lista de assistidos' />
+            <EmptyState title='Não encontramos nenhum episodio na lista de favoritos' />
           </div>
         )}
 

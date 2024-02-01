@@ -9,8 +9,11 @@ export const GET_ALL_EPISODES = gql`
         episode
         air_date
         characters {
-          name
           id
+          image
+          name
+          species
+          status
         }
       }
     }

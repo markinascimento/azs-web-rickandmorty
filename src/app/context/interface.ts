@@ -1,20 +1,6 @@
-export interface EpisodeDTO {
-  id: number;
-  air_date: string;
-  characters: Array<{
-    id: string;
-    image: string;
-    name: string;
-    species: string;
-    status: string;
-  }>;
-  created: Date;
-  episode: string;
-  name: string;
-  url: string;
-}
+import { EpisodeDTO } from '../DTOS/EpisodeDTO';
 
-export interface SeriesContextProps {
+export interface EpisodesContextProps {
   // Variables
   watched: EpisodeDTO[];
   favorites: EpisodeDTO[];
