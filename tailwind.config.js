@@ -6,7 +6,17 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': '#1C2C3B',
+        'secondary': '#0D171F',
+        'blue': '#2993FA',
+      },
+      fontFamily: {
+        sans: ['Sora', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+      }
+    },
   },
   plugins: [],
 };

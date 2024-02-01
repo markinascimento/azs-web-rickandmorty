@@ -8,6 +8,7 @@ import { Sidebar } from '../view/layout/Sidebar';
 import { Home } from '../view/pages/Home';
 import { Favorite } from '../view/pages/Favorite';
 import { EpisodeDetails } from '../view/pages/EpisodeDetails';
+import { ContinuaWatching } from '../view/pages/ContinuaWatching';
 
 export function Router() {
   return (
@@ -15,8 +16,9 @@ export function Router() {
       <Routes>
         <Route element={<Sidebar />} >
           <Route path='/' element={<Home />} />
-          <Route path='/episode/:id' element={<EpisodeDetails />} />
           <Route path='/favorite' element={<Favorite />} />
+          <Route path='/episode/:id' element={<EpisodeDetails />} />
+          <Route path='/continue_watching' element={<ContinuaWatching />} />
         </Route>
       </Routes>
     </BrowserRouter>

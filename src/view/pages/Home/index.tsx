@@ -6,10 +6,10 @@ import { Loader } from '../../components/Loader';
 import { BodyList } from '../../components/BodyList';
 import { Container } from '../../components/Container';
 import { InputFilter } from '../../components/InputFilter';
+import { EpisodeCard } from '../../components/EpisodeCard';
 
 // -> Types
 import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
-import { EpisodeCard } from '../../components/EpisodeCard';
 
 export function Home() {
   const {
@@ -40,7 +40,7 @@ export function Home() {
           />
 
           <BodyList className='mt-6'>
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+            <div className='grid grid-cols-1 px-6 gap-4 md:grid-cols-3 md:px-2'>
               {episodes.map((episode: EpisodeDTO) => (
                 <EpisodeCard key={episode.id} episode={episode} />
               ))}

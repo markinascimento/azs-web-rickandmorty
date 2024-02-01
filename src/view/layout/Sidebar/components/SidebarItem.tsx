@@ -1,3 +1,6 @@
+// -> ReactJS
+import { ElementType } from 'react';
+
 // -> Routing lib
 import { Link, useLocation } from 'react-router-dom';
 
@@ -8,9 +11,10 @@ import { cn } from '../../../../app/utils/cn';
 interface SidebarItemProps {
   label: string;
   path: string;
+  Icon: ElementType;
 }
 
-export function SidebarItem({ label, path }: SidebarItemProps) {
+export function SidebarItem({ label, path, Icon }: SidebarItemProps) {
   const { pathname }  = useLocation();
 
   const isActive = pathname === path;
@@ -19,11 +23,12 @@ export function SidebarItem({ label, path }: SidebarItemProps) {
     <Link
       to={path}
       className={cn(
-        'flex w-full min-h-[52px] items-center px-4 rounded-md text-lg font-bold tracking-[-0.5px] hover:text-base transition-all',
-        isActive && 'bg-zinc-200 dark:bg-zinc-800'
+        'flex w-full items-center gap-2 px-4 min-h-[52px] bg-transparent rounded-xl',
+        isActive && 'bg-[#121E29]'
       )}
     >
-      <span> {label} </span>
+      <Icon className="h-5 w-5" />
+      <span className='font-medium mt-1'> {label} </span>
     </Link>
   );
 }
