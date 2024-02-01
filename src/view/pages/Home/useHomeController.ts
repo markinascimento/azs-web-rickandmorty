@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { getAllEpisodes } from '../../../app/queries/getAllEpisodes';
+import { GET_ALL_EPISODES } from '../../../app/queries/GET_ALL_EPISODES';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { EpisodeDTO } from '../../../app/DTOS/EpisodeDTO';
 
 export function useHomeController() {
-  const { loading, data } = useQuery(getAllEpisodes);
+  const { loading, data } = useQuery(GET_ALL_EPISODES);
 
   const [filter, setFilter] = useState<string>('');
 

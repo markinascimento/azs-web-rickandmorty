@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const getAllEpisodes = gql`
+export const GET_ALL_EPISODES = gql`
   query {
     episodes {
       results {
