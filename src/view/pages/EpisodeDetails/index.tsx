@@ -1,14 +1,30 @@
-import { BodyList } from '../../components/BodyList';
-import { Container } from '../../components/Container';
-import { Loader } from '../../components/Loader';
+// - Icons lib
+import { CheckCircle2, Star } from 'lucide-react';
+
+// -> Utils
+import { cn } from '../../../app/utils/cn';
+
+// -> Controller
 import { useEpisodeDetailsController } from './useEpisodeDetailsController';
 
+// -> Components
+// import { Star } from '../../components/Star';
+import { Loader } from '../../components/Loader';
+import { BodyList } from '../../components/BodyList';
+import { Container } from '../../components/Container';
+
+// -> Images
 import bannerImg from '../../assets/banner.svg';
-import { Star } from '../../components/Star';
-import { CheckCircle2 } from 'lucide-react';
 
 export function EpisodeDetails() {
-  const { episode, loading } = useEpisodeDetailsController();
+  const {
+    episode,
+    loading,
+    hasWatched,
+    isFavorite,
+    toggleEpisodeWatched,
+    toggleEpisodeFavorite
+  } = useEpisodeDetailsController();
 
   return (
     <Container>
@@ -33,17 +49,24 @@ export function EpisodeDetails() {
               </span>
 
               <button
-                onClick={() => console.log('favorito')}
+                onClick={() => toggleEpisodeFavorite(episode)}
                 className='absolute top-2 right-2 flex w-12 h-12 items-center justify-center rounded-full'
               >
-                <Star />
+                <Star
+                  fill={isFavorite ? '#F7C700' : 'transparent'}
+                  strokeWidth={isFavorite ? 0 : 2}
+                />
               </button>
 
               <button
-                onClick={() => console.log('visto')}
-                className='absolute bottom-14 right-2 flex w-12 h-12 items-center justify-center bg-white rounded-full'
+                onClick={() => toggleEpisodeWatched(episode)}
+                className='absolute bottom-14 right-2 flex w-12 h-12 items-center justify-center rounded-full'
               >
-                <CheckCircle2 className='text-green-500' />
+                <CheckCircle2
+                  fill={hasWatched ? '#FFF' : 'transparent'}
+                  strokeWidth={2}
+                  className={cn( hasWatched ? 'text-green-500' : 'text-green-900' )}
+                />
               </button>
             </div>
           </header>

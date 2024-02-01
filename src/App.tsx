@@ -1,8 +1,12 @@
 // -> Query lib
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
+// -> ContextAPI
+import { SeriesProvider } from './app/context/SeriesContext';
+
 // -> Routes
 import { Router } from './router';
+import { Toaster } from 'react-hot-toast';
 
 export function App() {
   const client = new ApolloClient({
@@ -12,7 +16,11 @@ export function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Router />
+      <SeriesProvider>
+        <Toaster />
+
+        <Router />
+      </SeriesProvider>
     </ApolloProvider>
   );
 }

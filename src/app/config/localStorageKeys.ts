@@ -1,3 +1,4 @@
 export const localStorageKeys = {
-  APP_THEME: '@azs_web:theme'
+  EPISODES_FAVORITE: '@azs_web:episodes_favorite',
+  EPISODES_WATCHED: '@azs_web:episodes_watched',
 };
