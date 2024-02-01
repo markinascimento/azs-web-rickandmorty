@@ -29,7 +29,7 @@ export function Favorite() {
         isClear={!!filter.length}
         onClear={handleClearInputFilter}
         onChange={handleChangeFilter}
-        placeholder='Pesquisar nome do episodio'
+        placeholder='Pesquisar episodio pelo nome'
       />
 
       <BodyList className='mt-6'>
